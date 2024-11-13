@@ -27,14 +27,13 @@ namespace JobOpenings.Controllers
 
             string query = "INSERT INTO Location (Id,Title, City, State, Country, Zip) " +
                            "VALUES (@Id,@Title, @City, @State, @Country, @Zip); " +
-                           "SELECT SCOPE_IDENTITY();"; // Get the inserted ID
+                           "SELECT SCOPE_IDENTITY();"; 
 
             try
             {
-                // Ensure the connection is initialized
+               
                 using (SqlCommand cmd = new SqlCommand(query, _con))
                 {
-                    // Add parameters for each property of the Location object
                     cmd.Parameters.AddWithValue("@Id", location.Id);
                     cmd.Parameters.AddWithValue("@Title", location.Title);
                     cmd.Parameters.AddWithValue("@City", location.City);
@@ -56,7 +55,6 @@ namespace JobOpenings.Controllers
             }
             catch (SqlException sqlEx)
             {
-                // Handle SQL-specific exceptions if necessary
                 return InternalServerError(sqlEx);
             }
             catch (Exception ex)

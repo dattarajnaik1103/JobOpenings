@@ -71,7 +71,7 @@ namespace JobOpenings.Controllers
 
                     _con.Close();
 
-                    // Format response as expected JSON
+            
                     var response = new
                     {
                         id = jobOpening.Id,

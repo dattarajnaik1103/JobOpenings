@@ -27,18 +27,17 @@ namespace JobOpenings.Controllers
 
             string query = "INSERT INTO Department (Title) " +
                            "VALUES (@Title); " +
-                           "SELECT SCOPE_IDENTITY();"; // Get the inserted ID
+                           "SELECT SCOPE_IDENTITY();"; 
 
             try
             {
-                // Ensure the connection is initialized
                 using (SqlCommand cmd = new SqlCommand(query, _con))
                 {
                    
                     cmd.Parameters.AddWithValue("@Title", department.Title);
 
                     _con.Open();
-                    var newId = cmd.ExecuteScalar(); // Get ID of the newly inserted row
+                    var newId = cmd.ExecuteScalar();
                     if (newId != null)
                     {
                         return Ok(newId.ToString());
@@ -51,7 +50,7 @@ namespace JobOpenings.Controllers
             }
             catch (SqlException sqlEx)
             {
-                // Handle SQL-specific exceptions if necessary
+               
                 return InternalServerError(sqlEx);
             }
             catch (Exception ex)
@@ -126,7 +125,7 @@ namespace JobOpenings.Controllers
                         return NotFound();
                     }
 
-                    return Ok(dt); // Return the DataTable directly; Web API will serialize it.
+                    return Ok(dt); 
                 }
             }
             catch (Exception ex)

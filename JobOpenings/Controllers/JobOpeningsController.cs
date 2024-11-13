@@ -27,12 +27,12 @@ namespace JobOpenings.Controllers
 
             var response = string.Empty;
 
-            // Ensure a closing date is set; default to a future date if none is provided
+          
             jobOpening.ClosingDate = jobOpening.ClosingDate == default ? DateTime.Now.AddMonths(1) : jobOpening.ClosingDate;
 
             string query = "INSERT INTO JobOpenings (Title, Description, LocationId, DepartmentId, ClosingDate) " +
                            "VALUES (@Title, @Description, @LocationId, @DepartmentId, @ClosingDate); " +
-                           "SELECT SCOPE_IDENTITY();"; // Get the inserted ID
+                           "SELECT SCOPE_IDENTITY();";
 
             try
             {
@@ -45,7 +45,7 @@ namespace JobOpenings.Controllers
                     cmd.Parameters.AddWithValue("@ClosingDate", jobOpening.ClosingDate);
 
                     _con.Open();
-                    var newId = cmd.ExecuteScalar(); // Get ID of the newly inserted row
+                    var newId = cmd.ExecuteScalar();
                     response = newId != null ? newId.ToString() : "error";
                 }
             }
@@ -129,7 +129,7 @@ namespace JobOpenings.Controllers
                         return NotFound();
                     }
 
-                    return Ok(dt); // Return the DataTable directly; Web API will serialize it.
+                    return Ok(dt);
                 }
             }
             catch (Exception ex)

@@ -7,12 +7,12 @@ namespace JobOpenings.Models
     {
         public int Id { get; set; }
         public string Code => $"JOB-{Id:D2}";
-        public string Title { get; set; }              // Job title
-        public string Description { get; set; }        // Job description
-        public Location Location { get; set; }         // Nested Location object
-        public Department Department { get; set; }     // Nested Department object
-        public DateTime PostedDate { get; set; }       // Date the job was posted
-        public DateTime ClosingDate { get; set; }      // Application closing date
+        public string Title { get; set; }           
+        public string Description { get; set; }        
+        public Location Location { get; set; }        
+        public Department Department { get; set; }     
+        public DateTime PostedDate { get; set; }       
+        public DateTime ClosingDate { get; set; }     
     }
 
 }
