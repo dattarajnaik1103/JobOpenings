@@ -40,8 +40,8 @@ namespace JobOpenings.Controllers
                 {
                     cmd.Parameters.AddWithValue("@Title", jobOpening.Title);
                     cmd.Parameters.AddWithValue("@Description", jobOpening.Description);
-                    cmd.Parameters.AddWithValue("@LocationId", jobOpening.LocationId);
-                    cmd.Parameters.AddWithValue("@DepartmentId", jobOpening.DepartmentId);
+                    cmd.Parameters.AddWithValue("@LocationId", jobOpening.Location.Id);
+                    cmd.Parameters.AddWithValue("@DepartmentId", jobOpening.Department.DepartmentId);
                     cmd.Parameters.AddWithValue("@ClosingDate", jobOpening.ClosingDate);
 
                     _con.Open();
@@ -78,8 +78,8 @@ namespace JobOpenings.Controllers
                     cmd.Parameters.AddWithValue("@Id", id);
                     cmd.Parameters.AddWithValue("@Title", jobOpening.Title);
                     cmd.Parameters.AddWithValue("@Description", jobOpening.Description);
-                    cmd.Parameters.AddWithValue("@LocationId", jobOpening.LocationId);
-                    cmd.Parameters.AddWithValue("@DepartmentId", jobOpening.DepartmentId);
+                    cmd.Parameters.AddWithValue("@LocationId", jobOpening.Location.Id);
+                    cmd.Parameters.AddWithValue("@DepartmentId", jobOpening.Department.DepartmentId);
                     cmd.Parameters.AddWithValue("@ClosingDate", jobOpening.ClosingDate);
 
                     _con.Open();

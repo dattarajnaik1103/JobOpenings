@@ -25,8 +25,8 @@ namespace JobOpenings.Controllers
                 return BadRequest("Invalid location data.");
             }
 
-            string query = "INSERT INTO Location (Title, City, State, Country, Zip) " +
-                           "VALUES (@Title, @City, @State, @Country, @Zip); " +
+            string query = "INSERT INTO Location (Id,Title, City, State, Country, Zip) " +
+                           "VALUES (@Id,@Title, @City, @State, @Country, @Zip); " +
                            "SELECT SCOPE_IDENTITY();"; // Get the inserted ID
 
             try
@@ -35,6 +35,7 @@ namespace JobOpenings.Controllers
                 using (SqlCommand cmd = new SqlCommand(query, _con))
                 {
                     // Add parameters for each property of the Location object
+                    cmd.Parameters.AddWithValue("@Id", location.Id);
                     cmd.Parameters.AddWithValue("@Title", location.Title);
                     cmd.Parameters.AddWithValue("@City", location.City);
                     cmd.Parameters.AddWithValue("@State", location.State ?? (object)DBNull.Value);
@@ -45,7 +46,7 @@ namespace JobOpenings.Controllers
                     var newId = cmd.ExecuteScalar(); // Get ID of the newly inserted row
                     if (newId != null)
                     {
-                        return Ok(newId.ToString());
+                        return Ok(location.Id.ToString());
                     }
                     else
                     {
@@ -76,7 +77,7 @@ namespace JobOpenings.Controllers
                 return BadRequest("Invalid location data.");
             }
 
-            string query = "UPDATE Location SET Title = @Title, City = @City, State = @State, Country = @Country, Zip = @Zip WHERE LocationId = @Id";
+            string query = "UPDATE Location SET Id=@Id, Title = @Title, City = @City, State = @State, Country = @Country, Zip = @Zip WHERE Id = @Id";
 
             try
             {
@@ -117,7 +118,7 @@ namespace JobOpenings.Controllers
         [HttpGet]
         public IHttpActionResult Get(int id)
         {
-            string query = "SELECT LocationId, Title, City, State, Country, Zip FROM Location WHERE LocationId = @Id";
+            string query = "SELECT Id, Title, City, State, Country, Zip FROM Location WHERE Id = @Id";
 
             try
             {
@@ -132,12 +133,12 @@ namespace JobOpenings.Controllers
                         {
                             var location = new Location
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("LocationId")),
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
                                 Title = reader.GetString(reader.GetOrdinal("Title")),
                                 City = reader.GetString(reader.GetOrdinal("City")),
                                 State = reader.IsDBNull(reader.GetOrdinal("State")) ? null : reader.GetString(reader.GetOrdinal("State")),
                                 Country = reader.GetString(reader.GetOrdinal("Country")),
-                                Zip = reader.IsDBNull(reader.GetOrdinal("Zip")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("Zip"))
+                                Zip = (int)(reader.IsDBNull(reader.GetOrdinal("Zip")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("Zip")))
                             };
 
                             return Ok(location);

@@ -34,6 +34,7 @@ namespace JobOpenings.Controllers
                 // Ensure the connection is initialized
                 using (SqlCommand cmd = new SqlCommand(query, _con))
                 {
+                   
                     cmd.Parameters.AddWithValue("@Title", department.Title);
 
                     _con.Open();
